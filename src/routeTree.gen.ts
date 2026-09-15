@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedTableauDeBordRouteImport } from './routes/_authenticated/tableau-de-bord'
+import { Route as AuthenticatedConsultationsIndexRouteImport } from './routes/_authenticated/consultations.index'
+import { Route as AuthenticatedConsultationsNouvelleRouteImport } from './routes/_authenticated/consultations.nouvelle'
 import { Route as AuthenticatedTravailleursIndexRouteImport } from './routes/_authenticated/travailleurs.index'
 import { Route as AuthenticatedTravailleursIdRouteImport } from './routes/_authenticated/travailleurs.$id'
 
@@ -36,6 +38,18 @@ const AuthenticatedTableauDeBordRoute =
     path: '/tableau-de-bord',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedConsultationsIndexRoute =
+  AuthenticatedConsultationsIndexRouteImport.update({
+    id: '/consultations/',
+    path: '/consultations/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedConsultationsNouvelleRoute =
+  AuthenticatedConsultationsNouvelleRouteImport.update({
+    id: '/consultations/nouvelle',
+    path: '/consultations/nouvelle',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedTravailleursIndexRoute =
   AuthenticatedTravailleursIndexRouteImport.update({
     id: '/travailleurs/',
@@ -53,14 +67,18 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/tableau-de-bord': typeof AuthenticatedTableauDeBordRoute
+  '/consultations/nouvelle': typeof AuthenticatedConsultationsNouvelleRoute
   '/travailleurs/$id': typeof AuthenticatedTravailleursIdRoute
+  '/consultations/': typeof AuthenticatedConsultationsIndexRoute
   '/travailleurs/': typeof AuthenticatedTravailleursIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/tableau-de-bord': typeof AuthenticatedTableauDeBordRoute
+  '/consultations/nouvelle': typeof AuthenticatedConsultationsNouvelleRoute
   '/travailleurs/$id': typeof AuthenticatedTravailleursIdRoute
+  '/consultations': typeof AuthenticatedConsultationsIndexRoute
   '/travailleurs': typeof AuthenticatedTravailleursIndexRoute
 }
 export interface FileRoutesById {
@@ -69,22 +87,39 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/tableau-de-bord': typeof AuthenticatedTableauDeBordRoute
+  '/_authenticated/consultations/nouvelle': typeof AuthenticatedConsultationsNouvelleRoute
   '/_authenticated/travailleurs/$id': typeof AuthenticatedTravailleursIdRoute
+  '/_authenticated/consultations/': typeof AuthenticatedConsultationsIndexRoute
   '/_authenticated/travailleurs/': typeof AuthenticatedTravailleursIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/tableau-de-bord' | '/travailleurs/$id' | '/travailleurs/'
+    | '/'
+    | '/auth'
+    | '/tableau-de-bord'
+    | '/consultations/nouvelle'
+    | '/travailleurs/$id'
+    | '/consultations/'
+    | '/travailleurs/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/tableau-de-bord' | '/travailleurs/$id' | '/travailleurs'
+  to:
+    | '/'
+    | '/auth'
+    | '/tableau-de-bord'
+    | '/consultations/nouvelle'
+    | '/travailleurs/$id'
+    | '/consultations'
+    | '/travailleurs'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/tableau-de-bord'
+    | '/_authenticated/consultations/nouvelle'
     | '/_authenticated/travailleurs/$id'
+    | '/_authenticated/consultations/'
     | '/_authenticated/travailleurs/'
   fileRoutesById: FileRoutesById
 }
@@ -124,6 +159,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTableauDeBordRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/consultations/': {
+      id: '/_authenticated/consultations/'
+      path: '/consultations'
+      fullPath: '/consultations/'
+      preLoaderRoute: typeof AuthenticatedConsultationsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/consultations/nouvelle': {
+      id: '/_authenticated/consultations/nouvelle'
+      path: '/consultations/nouvelle'
+      fullPath: '/consultations/nouvelle'
+      preLoaderRoute: typeof AuthenticatedConsultationsNouvelleRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/travailleurs/': {
       id: '/_authenticated/travailleurs/'
       path: '/travailleurs'
@@ -143,13 +192,18 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedTableauDeBordRoute: typeof AuthenticatedTableauDeBordRoute
+  AuthenticatedConsultationsNouvelleRoute: typeof AuthenticatedConsultationsNouvelleRoute
   AuthenticatedTravailleursIdRoute: typeof AuthenticatedTravailleursIdRoute
+  AuthenticatedConsultationsIndexRoute: typeof AuthenticatedConsultationsIndexRoute
   AuthenticatedTravailleursIndexRoute: typeof AuthenticatedTravailleursIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedTableauDeBordRoute: AuthenticatedTableauDeBordRoute,
+  AuthenticatedConsultationsNouvelleRoute:
+    AuthenticatedConsultationsNouvelleRoute,
   AuthenticatedTravailleursIdRoute: AuthenticatedTravailleursIdRoute,
+  AuthenticatedConsultationsIndexRoute: AuthenticatedConsultationsIndexRoute,
   AuthenticatedTravailleursIndexRoute: AuthenticatedTravailleursIndexRoute,
 }
 
