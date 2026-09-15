@@ -10,33 +10,123 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedTableauDeBordRouteImport } from './routes/_authenticated/tableau-de-bord'
+import { Route as AuthenticatedConsultationsIndexRouteImport } from './routes/_authenticated/consultations.index'
+import { Route as AuthenticatedConsultationsNouvelleRouteImport } from './routes/_authenticated/consultations.nouvelle'
+import { Route as AuthenticatedTravailleursIndexRouteImport } from './routes/_authenticated/travailleurs.index'
+import { Route as AuthenticatedTravailleursIdRouteImport } from './routes/_authenticated/travailleurs.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedTableauDeBordRoute =
+  AuthenticatedTableauDeBordRouteImport.update({
+    id: '/tableau-de-bord',
+    path: '/tableau-de-bord',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedConsultationsIndexRoute =
+  AuthenticatedConsultationsIndexRouteImport.update({
+    id: '/consultations/',
+    path: '/consultations/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedConsultationsNouvelleRoute =
+  AuthenticatedConsultationsNouvelleRouteImport.update({
+    id: '/consultations/nouvelle',
+    path: '/consultations/nouvelle',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTravailleursIndexRoute =
+  AuthenticatedTravailleursIndexRouteImport.update({
+    id: '/travailleurs/',
+    path: '/travailleurs/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedTravailleursIdRoute =
+  AuthenticatedTravailleursIdRouteImport.update({
+    id: '/travailleurs/$id',
+    path: '/travailleurs/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/tableau-de-bord': typeof AuthenticatedTableauDeBordRoute
+  '/consultations/nouvelle': typeof AuthenticatedConsultationsNouvelleRoute
+  '/travailleurs/$id': typeof AuthenticatedTravailleursIdRoute
+  '/consultations/': typeof AuthenticatedConsultationsIndexRoute
+  '/travailleurs/': typeof AuthenticatedTravailleursIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/tableau-de-bord': typeof AuthenticatedTableauDeBordRoute
+  '/consultations/nouvelle': typeof AuthenticatedConsultationsNouvelleRoute
+  '/travailleurs/$id': typeof AuthenticatedTravailleursIdRoute
+  '/consultations': typeof AuthenticatedConsultationsIndexRoute
+  '/travailleurs': typeof AuthenticatedTravailleursIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/tableau-de-bord': typeof AuthenticatedTableauDeBordRoute
+  '/_authenticated/consultations/nouvelle': typeof AuthenticatedConsultationsNouvelleRoute
+  '/_authenticated/travailleurs/$id': typeof AuthenticatedTravailleursIdRoute
+  '/_authenticated/consultations/': typeof AuthenticatedConsultationsIndexRoute
+  '/_authenticated/travailleurs/': typeof AuthenticatedTravailleursIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/tableau-de-bord'
+    | '/consultations/nouvelle'
+    | '/travailleurs/$id'
+    | '/consultations/'
+    | '/travailleurs/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/tableau-de-bord'
+    | '/consultations/nouvelle'
+    | '/travailleurs/$id'
+    | '/consultations'
+    | '/travailleurs'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/tableau-de-bord'
+    | '/_authenticated/consultations/nouvelle'
+    | '/_authenticated/travailleurs/$id'
+    | '/_authenticated/consultations/'
+    | '/_authenticated/travailleurs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +138,82 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/tableau-de-bord': {
+      id: '/_authenticated/tableau-de-bord'
+      path: '/tableau-de-bord'
+      fullPath: '/tableau-de-bord'
+      preLoaderRoute: typeof AuthenticatedTableauDeBordRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/consultations/': {
+      id: '/_authenticated/consultations/'
+      path: '/consultations'
+      fullPath: '/consultations/'
+      preLoaderRoute: typeof AuthenticatedConsultationsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/consultations/nouvelle': {
+      id: '/_authenticated/consultations/nouvelle'
+      path: '/consultations/nouvelle'
+      fullPath: '/consultations/nouvelle'
+      preLoaderRoute: typeof AuthenticatedConsultationsNouvelleRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/travailleurs/': {
+      id: '/_authenticated/travailleurs/'
+      path: '/travailleurs'
+      fullPath: '/travailleurs/'
+      preLoaderRoute: typeof AuthenticatedTravailleursIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/travailleurs/$id': {
+      id: '/_authenticated/travailleurs/$id'
+      path: '/travailleurs/$id'
+      fullPath: '/travailleurs/$id'
+      preLoaderRoute: typeof AuthenticatedTravailleursIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedTableauDeBordRoute: typeof AuthenticatedTableauDeBordRoute
+  AuthenticatedConsultationsNouvelleRoute: typeof AuthenticatedConsultationsNouvelleRoute
+  AuthenticatedTravailleursIdRoute: typeof AuthenticatedTravailleursIdRoute
+  AuthenticatedConsultationsIndexRoute: typeof AuthenticatedConsultationsIndexRoute
+  AuthenticatedTravailleursIndexRoute: typeof AuthenticatedTravailleursIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedTableauDeBordRoute: AuthenticatedTableauDeBordRoute,
+  AuthenticatedConsultationsNouvelleRoute:
+    AuthenticatedConsultationsNouvelleRoute,
+  AuthenticatedTravailleursIdRoute: AuthenticatedTravailleursIdRoute,
+  AuthenticatedConsultationsIndexRoute: AuthenticatedConsultationsIndexRoute,
+  AuthenticatedTravailleursIndexRoute: AuthenticatedTravailleursIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
