@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedReferentielsRouteImport } from './routes/_authenticated/referentiels'
 import { Route as AuthenticatedTableauDeBordRouteImport } from './routes/_authenticated/tableau-de-bord'
+import { Route as AuthenticatedUtilisateursRouteImport } from './routes/_authenticated/utilisateurs'
 import { Route as AuthenticatedConsultationsIndexRouteImport } from './routes/_authenticated/consultations.index'
 import { Route as AuthenticatedConsultationsNouvelleRouteImport } from './routes/_authenticated/consultations.nouvelle'
 import { Route as AuthenticatedTravailleursIndexRouteImport } from './routes/_authenticated/travailleurs.index'
@@ -32,10 +34,22 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedReferentielsRoute =
+  AuthenticatedReferentielsRouteImport.update({
+    id: '/referentiels',
+    path: '/referentiels',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedTableauDeBordRoute =
   AuthenticatedTableauDeBordRouteImport.update({
     id: '/tableau-de-bord',
     path: '/tableau-de-bord',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedUtilisateursRoute =
+  AuthenticatedUtilisateursRouteImport.update({
+    id: '/utilisateurs',
+    path: '/utilisateurs',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedConsultationsIndexRoute =
@@ -66,7 +80,9 @@ const AuthenticatedTravailleursIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/referentiels': typeof AuthenticatedReferentielsRoute
   '/tableau-de-bord': typeof AuthenticatedTableauDeBordRoute
+  '/utilisateurs': typeof AuthenticatedUtilisateursRoute
   '/consultations/nouvelle': typeof AuthenticatedConsultationsNouvelleRoute
   '/travailleurs/$id': typeof AuthenticatedTravailleursIdRoute
   '/consultations/': typeof AuthenticatedConsultationsIndexRoute
@@ -75,7 +91,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/referentiels': typeof AuthenticatedReferentielsRoute
   '/tableau-de-bord': typeof AuthenticatedTableauDeBordRoute
+  '/utilisateurs': typeof AuthenticatedUtilisateursRoute
   '/consultations/nouvelle': typeof AuthenticatedConsultationsNouvelleRoute
   '/travailleurs/$id': typeof AuthenticatedTravailleursIdRoute
   '/consultations': typeof AuthenticatedConsultationsIndexRoute
@@ -86,7 +104,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/referentiels': typeof AuthenticatedReferentielsRoute
   '/_authenticated/tableau-de-bord': typeof AuthenticatedTableauDeBordRoute
+  '/_authenticated/utilisateurs': typeof AuthenticatedUtilisateursRoute
   '/_authenticated/consultations/nouvelle': typeof AuthenticatedConsultationsNouvelleRoute
   '/_authenticated/travailleurs/$id': typeof AuthenticatedTravailleursIdRoute
   '/_authenticated/consultations/': typeof AuthenticatedConsultationsIndexRoute
@@ -97,7 +117,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/referentiels'
     | '/tableau-de-bord'
+    | '/utilisateurs'
     | '/consultations/nouvelle'
     | '/travailleurs/$id'
     | '/consultations/'
@@ -106,7 +128,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/referentiels'
     | '/tableau-de-bord'
+    | '/utilisateurs'
     | '/consultations/nouvelle'
     | '/travailleurs/$id'
     | '/consultations'
@@ -116,7 +140,9 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/referentiels'
     | '/_authenticated/tableau-de-bord'
+    | '/_authenticated/utilisateurs'
     | '/_authenticated/consultations/nouvelle'
     | '/_authenticated/travailleurs/$id'
     | '/_authenticated/consultations/'
@@ -152,11 +178,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/referentiels': {
+      id: '/_authenticated/referentiels'
+      path: '/referentiels'
+      fullPath: '/referentiels'
+      preLoaderRoute: typeof AuthenticatedReferentielsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/tableau-de-bord': {
       id: '/_authenticated/tableau-de-bord'
       path: '/tableau-de-bord'
       fullPath: '/tableau-de-bord'
       preLoaderRoute: typeof AuthenticatedTableauDeBordRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/utilisateurs': {
+      id: '/_authenticated/utilisateurs'
+      path: '/utilisateurs'
+      fullPath: '/utilisateurs'
+      preLoaderRoute: typeof AuthenticatedUtilisateursRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/consultations/': {
@@ -191,7 +231,9 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedReferentielsRoute: typeof AuthenticatedReferentielsRoute
   AuthenticatedTableauDeBordRoute: typeof AuthenticatedTableauDeBordRoute
+  AuthenticatedUtilisateursRoute: typeof AuthenticatedUtilisateursRoute
   AuthenticatedConsultationsNouvelleRoute: typeof AuthenticatedConsultationsNouvelleRoute
   AuthenticatedTravailleursIdRoute: typeof AuthenticatedTravailleursIdRoute
   AuthenticatedConsultationsIndexRoute: typeof AuthenticatedConsultationsIndexRoute
@@ -199,7 +241,9 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedReferentielsRoute: AuthenticatedReferentielsRoute,
   AuthenticatedTableauDeBordRoute: AuthenticatedTableauDeBordRoute,
+  AuthenticatedUtilisateursRoute: AuthenticatedUtilisateursRoute,
   AuthenticatedConsultationsNouvelleRoute:
     AuthenticatedConsultationsNouvelleRoute,
   AuthenticatedTravailleursIdRoute: AuthenticatedTravailleursIdRoute,
