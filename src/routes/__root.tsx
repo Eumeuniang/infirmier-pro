@@ -77,11 +77,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "SSMSI — Suivi médico-professionnel de l'infirmerie" },
+      {
+        name: "description",
+        content:
+          "Plateforme de suivi des travailleurs, consultations infirmières et surveillance sanitaire.",
+      },
+      { property: "og:title", content: "SSMSI — Infirmerie d'entreprise" },
+      {
+        property: "og:description",
+        content: "Consultations, dossiers individuels et indicateurs de santé au travail.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
