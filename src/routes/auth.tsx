@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Activity } from "lucide-react";
+import { Activity, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -43,6 +43,7 @@ function AuthPage() {
   const [nomComplet, setNomComplet] = useState("");
   const [role, setRole] = useState<AppRole>("infirmier");
   const [enCours, setEnCours] = useState(false);
+  const [voirMdp, setVoirMdp] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
